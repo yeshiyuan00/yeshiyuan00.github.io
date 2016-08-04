@@ -23,9 +23,9 @@ tags:
     
   成功启动jenkins后在浏览器输入localhost:8080 即可访问jenkins(jenkins的默认端口时8080)。第一次打开如下图所示：  
   
-  ![](/resource/img/jenkins-getting-start.png)
+  ![](/img/jenkins-getting-start.png)
   
   将/Users/yeshiyuan/.jenkins/secrets/initialAdminPassword里面的密码填入输入框即可继续。然后根据提示进行后面的操作。主要是安装一些插件和创建一个管理员账户。完成后，界面如下：
   
-  ![](/resource/img/jenkins-started.png)
+  ![](/img/jenkins-started.png)
   
