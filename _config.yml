@@ -4,10 +4,10 @@
 
 # Site
 title: blog
-subtitle:
-description:
+subtitle: yeshiyuan‘s blog
+description: 一诺千金
 author: yeshiyuan
-language: zh-tw
+language: zh-TW
 timezone:
 
 # URL
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: jacman
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
