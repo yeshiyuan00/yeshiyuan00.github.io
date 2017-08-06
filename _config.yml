@@ -8,7 +8,7 @@ subtitle: yeshiyuan‘s blog
 description: 一诺千金
 author: yeshiyuan
 language: zh-TW
-timezone:
+timezone: 
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -68,7 +68,7 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git 
+  type: git
   repo: 
     github: git@github.com:yeshiyuan00/yeshiyuan00.github.io.git
     branch: master
