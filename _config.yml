@@ -7,7 +7,7 @@ title: blog
 subtitle: yeshiyuan‘s blog
 description: 一诺千金
 author: yeshiyuan
-language: zh-TW
+language: zh-Hans
 timezone: 
 
 # URL
@@ -69,6 +69,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: 
-    github: git@github.com:yeshiyuan00/yeshiyuan00.github.io.git
-    branch: master
+  repo: git@github.com:yeshiyuan00/yeshiyuan00.github.io.git
+  branch: master
