@@ -1,7 +1,7 @@
 ---
 title: react-native学习系列--组件学习1(ListView)
 date: 2016-08-26 10:20:34
-tags:
+tags: react-native
 ---
 接下来开始react-native组件的学习。组件(Components)是react-native的重要组成部分，对应于Android原生开发的控件。在原生开发中，列表控件ListView常常出现，在我们的应用中占有至关重要的地位。今天我们就来学习下，react-native中得ListView如何使用。
 

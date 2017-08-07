@@ -1,7 +1,7 @@
 ---
 title: react-native学习系列--组件学习2(其它常用控件)
 date: 2016-08-26 15:49:33
-tags:
+tags: react-native
 ---
 在原生开发中，除了ListView以外，最常用的控件就是TextView、ImageView、Button和EditText这些了，下面我们来看看在react-native中时如何使用这些组件的。
 

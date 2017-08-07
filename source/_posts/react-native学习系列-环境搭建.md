@@ -1,7 +1,7 @@
 ---
 title: react-native学习系列--环境搭建
 date: 2016-08-19 16:11:04
-tags:
+tags: react-native
 ---
 接下来的计划是学习react-native开发，最终目标是能够使用react-native完成一个App。为了提升学习效率、加深印象，在学习的过程中将使用博客的方式来做笔记，将学到的知识、心得体会以及遇到的坑记录下来，方便回顾和记忆。本篇文章时react-native系类的第一篇文章，我们从react-native的开发环境搭建开始。  
   react-native的官方项目地址：<https://github.com/facebook/react-native>

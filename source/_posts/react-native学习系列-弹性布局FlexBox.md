@@ -1,7 +1,7 @@
 ---
 title: react-native学习系列--弹性布局FlexBox
 date: 2016-08-26 17:37:09
-tags:
+tags: react-native
 ---
 在Android原生开发中，我们经常要写各种各样的布局文件。最常用到的就是LinearLayout、RelativeLayout和FrameLayout这些布局空间了。我们之前写的代码中，都是一个View中包含各种子View，子View都是一个紧接着一个在垂直方向上排列。那么reac-native有没有提供给我们类似LinearLayout、RelativeLayout这种布局控件呢，答案时肯定的。  
 我们在React Native中使用flexbox规则来指定某个组件的子元素的布局。FlexBox就是为在不同的屏幕尺寸上提供一致的布局二设计的。React Native中的Flexbox的工作原理和web上的CSS基本一致，当然也存在少许差异。

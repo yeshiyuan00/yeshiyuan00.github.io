@@ -1,7 +1,7 @@
 ---
 title: jenkins自动构建Android项目
 date: 2016-08-04 10:33:37
-tags:
+tags: jenkins
 ---
 
   最近在学习如何使用jenkins来自动构建Android项目，为了防止之后忘记，特地将整个过程记录下来，方便以后快速回忆。
