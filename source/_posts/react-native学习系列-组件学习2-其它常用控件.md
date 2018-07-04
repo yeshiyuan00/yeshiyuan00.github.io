@@ -5,6 +5,8 @@ tags: react-native
 ---
 在原生开发中，除了ListView以外，最常用的控件就是TextView、ImageView、Button和EditText这些了，下面我们来看看在react-native中时如何使用这些组件的。
 
+<!-- more -->
+
 ### Text
 Text是react-native的一个基本组件，对应于原生Android中的TextView控件，主要用于显示基本的文本信息。除了显示基本的文本信息以外，还可以嵌套显示，设置样式以及处理点击事件。
 下面是一个Text组件的基本用法：

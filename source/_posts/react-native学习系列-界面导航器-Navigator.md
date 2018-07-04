@@ -6,6 +6,8 @@ tags: react-native
 ### 前言 
 在Android原生开发中，我们的App往往由许多个界面构成，这些个界面往往又是一个个Activity，一个界面即一个Activity，当然也有可能是一个Activity里面的多个Fragment。我们应用使用过程中就需要不断的切换这些个界面，在原生开发中，我们切换Activity非常简单，只需要在AndroidManifest中注册我们的Activity，然后实现如下代码：  
 
+<!-- more -->
+
 ```
 Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
 startActivity(intent);

@@ -3,7 +3,9 @@ title: react-native学习系列--在已存在的项目中集成
 date: 2016-08-19 17:38:50
 tags: react-native
 ---
-上一篇文章中我们直接使用react-native命令行工具创建一个新的react-native项目，接下来我们要在现有的Android项目中集成react-native。  
+上一篇文章中我们直接使用react-native命令行工具创建一个新的react-native项目，接下来我们要在现有的Android项目中集成react-native。
+
+<!-- more -->  
 
 ### app项目中加入JS
 在Android项目的根目录下，执行下面命令：  

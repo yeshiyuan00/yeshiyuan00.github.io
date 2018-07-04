@@ -6,6 +6,8 @@ tags: react-native
 在日常的App开发中，我们经常需要和服务器端进行通信，从服务器端取得数据，然后才显示到我们的App上面。原生Android开发可以使用HttpUrlConnection这个类来与服务器连接，也可以使用一些其他的网络请求框架，比如:Okhttp、retrofit、Volly等等。
 react-native也给我们提供了类似的api，比如fetch api、WebSocket，也有其他的网络请求框架XMLHttpRequest。今天我们主要就来学习fetch api的用法。
 
+<!-- more -->
+
 ### 使用 Fetch
 Fetch API 是React-native提供的API，所以不需要添加其他依赖，即可以直接使用。
 

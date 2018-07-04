@@ -6,6 +6,8 @@ tags: react-native
 接下来的计划是学习react-native开发，最终目标是能够使用react-native完成一个App。为了提升学习效率、加深印象，在学习的过程中将使用博客的方式来做笔记，将学到的知识、心得体会以及遇到的坑记录下来，方便回顾和记忆。本篇文章时react-native系类的第一篇文章，我们从react-native的开发环境搭建开始。  
   react-native的官方项目地址：<https://github.com/facebook/react-native>
 
+<!-- more -->
+
 ### 环境搭建
   工欲善其事，必先利其器，在使用react-native开发之前，我们必须先将开发环境搭建起来。由于我的电脑是MAC，所以下面的操作都是基于MAC环境下进行的。  
   

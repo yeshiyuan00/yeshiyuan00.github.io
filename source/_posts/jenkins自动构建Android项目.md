@@ -6,6 +6,8 @@ tags: jenkins
 
   最近在学习如何使用jenkins来自动构建Android项目，为了防止之后忘记，特地将整个过程记录下来，方便以后快速回忆。
 
+<!-- more -->
+
 ## 安装jenkins
   我的系统是MAC OS，在这里使用brew来安装。
   
