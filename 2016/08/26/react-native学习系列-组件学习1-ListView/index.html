@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="yeshiyuan">
+
+
+
+<meta name="description" content="接下来开始react-native组件的学习。组件(Components)是react-native的重要组成部分，对应于Android原生开发的控件。在原生开发中，列表控件ListView常常出现，在我们的应用中占有至关重要的地位。今天我们就来学习下，react-native中得ListView如何使用。">
+<meta name="keywords" content="react-native">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-native学习系列--组件学习1(ListView)">
+<meta property="og:url" content="https://yeshiyuan00.github.io/2016/08/26/react-native学习系列-组件学习1-ListView/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="接下来开始react-native组件的学习。组件(Components)是react-native的重要组成部分，对应于Android原生开发的控件。在原生开发中，列表控件ListView常常出现，在我们的应用中占有至关重要的地位。今天我们就来学习下，react-native中得ListView如何使用。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://yeshiyuan00.github.io/img/4/eight-row-list.png">
+<meta property="og:image" content="https://yeshiyuan00.github.io/img/4/final-effect.png">
+<meta property="og:updated_time" content="2019-12-09T12:12:47.474Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-native学习系列--组件学习1(ListView)">
+<meta name="twitter:description" content="接下来开始react-native组件的学习。组件(Components)是react-native的重要组成部分，对应于Android原生开发的控件。在原生开发中，列表控件ListView常常出现，在我们的应用中占有至关重要的地位。今天我们就来学习下，react-native中得ListView如何使用。">
+<meta name="twitter:image" content="https://yeshiyuan00.github.io/img/4/eight-row-list.png">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>react-native学习系列--组件学习1(ListView) | blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">yeshiyuan</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">yeshiyuan‘s blog</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/">FFmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jenkins/">jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native/">react-native</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">yeshiyuan</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">yeshiyuan</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">yeshiyuan‘s blog</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-react-native学习系列-组件学习1-ListView" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/26/react-native学习系列-组件学习1-ListView/" class="article-date">
+      <time datetime="2016-08-26T02:20:34.000Z" itemprop="datePublished">2016-08-26</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      react-native学习系列--组件学习1(ListView)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react-native/">react-native</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>接下来开始react-native组件的学习。组件(Components)是react-native的重要组成部分，对应于Android原生开发的控件。在原生开发中，列表控件ListView常常出现，在我们的应用中占有至关重要的地位。今天我们就来学习下，react-native中得ListView如何使用。</p>
+<a id="more"></a>
+
+<h3 id="最简单的用法"><a href="#最简单的用法" class="headerlink" title="最简单的用法"></a>最简单的用法</h3><p>下面的代码实现了一个最简单的ListView的使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var ListViewExample = React.createClass(&#123;</span><br><span class="line">	getInitialState: function() &#123;</span><br><span class="line">  		var ds = new ListView.DataSource(&#123;rowHasChanged: (r1, r2) =&gt; r1 !== r2&#125;);</span><br><span class="line">  		return &#123;</span><br><span class="line">   		 dataSource: ds.cloneWithRows([&apos;row 1&apos;, &apos;row 2&apos;, &apos;row 3&apos;, &apos;row 4&apos;, &apos;row 5&apos;</span><br><span class="line">   		 , &apos;row 6&apos;, &apos;row 7&apos;, &apos;row 8&apos;]),</span><br><span class="line">  		&#125;;</span><br><span class="line">	&#125;,</span><br><span class="line">	render: function() &#123;</span><br><span class="line">  		return (</span><br><span class="line">    		&lt;ListView</span><br><span class="line">      		dataSource=&#123;this.state.dataSource&#125;</span><br><span class="line">     		renderRow=&#123;(rowData) =&gt; &lt;Text&gt;&#123;rowData&#125;&lt;/Text&gt;&#125;</span><br><span class="line">    		/&gt;</span><br><span class="line">  		);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：  </p>
+<p><img src="/img/4/eight-row-list.png" alt>  </p>
+<p>在原生开发中，每一个ListView都需要有一个适配器Adapter，在Adapter中需要指定ListView的数据源和每一行的布局，这样ListView才能正确的显示。<br>在上面的代码中，ListView设置了两个属性：dataSource和renderRow。其中，dataSource即对应于原生开发中的数据源，renderRow即对应原生开发中的每一行的布局，这里采用了react得JSX语法，在javascript代码中嵌入xml代码。</p>
+<h3 id="点击事件"><a href="#点击事件" class="headerlink" title="点击事件"></a>点击事件</h3><p>上面代码展示了ListView得基本用法，实现了用ListView展示数据源。但我们在使用过程中往往不单单只是要展示数据，有时我们也需要为ListView设置点击事件，在点击相应的Item的时候会有相应的操作。在原生开发中，设置点击事件可以通过调用ListView的onItemClickListener()方法监听ListView的点击事件，那么，在react-native中，我们怎样监听ListView的点击事件呢。</p>
+<p>react-native中设置ListView的点击事件监听相对麻烦些(就我目前所了解到的方法来说)。首先，react-native中得ListView组件并没有发现类似setOnclik()的方法。不过有一个TouchableHighlight组件可以接收触摸事件。我们只需要在renderRow的最外层包一层TouchableHighlight就可以实现对点击事件的监听。比如下面这样：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;ListView</span><br><span class="line">	dataSource=&#123;this.state.dataSource&#125;</span><br><span class="line">    renderRow=&#123;(rowData) =&gt; &lt;TouchableHighlight onPress=&#123;() =&gt; &#123;&#125;&#125;&gt;&lt;Text&gt;&#123;rowData&#125;	&lt;/Text&gt;&lt;/TouchableHighlight&gt;&#125;</span><br><span class="line"> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>不过上面这样写只是最简单的写法，但这样写的话每一个Item的响应动作都是一样的，没办法为每个Item指定对应的事件，并且点击事件直接在上面写的话也会比较难看。<br>所以具体的做法应该是给ListView的renderRow属性直接赋值一个函数，函数在render函数之外实现，返回Item得布局文件并设置点击事件监听。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">render: function() &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;ListView</span><br><span class="line">          dataSource=&#123;this.state.dataSource&#125;</span><br><span class="line">          renderRow=&#123;this._renderRow&#125;</span><br><span class="line">          /&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>_renderRow函数有四个参数(rowData: string, sectionID: number, rowID: number, highlightRow: (sectionID: number, rowID: number) =&gt; void),分别表示当前Item的行数据、组Id、行Id和每一个Item被选中时高亮的函数。代码如下： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">_renderRow: function(rowData: string, sectionID: number, rowID: number, highlightRow: (sectionID: number, rowID: number) =&gt; void) &#123;</span><br><span class="line">    var rowHash = Math.abs(hashCode(rowData));</span><br><span class="line">    var imgSource = THUMB_URLS[rowHash % THUMB_URLS.length];</span><br><span class="line">    return (</span><br><span class="line">      &lt;TouchableHighlight onPress=&#123;() =&gt; &#123;</span><br><span class="line">          this._pressRow(rowID);</span><br><span class="line">          highlightRow(sectionID, rowID);</span><br><span class="line">        &#125;&#125;&gt;</span><br><span class="line">        &lt;View&gt;</span><br><span class="line">          &lt;View style=&#123;styles.row&#125;&gt;</span><br><span class="line">            &lt;Image style=&#123;styles.thumb&#125; source=&#123;imgSource&#125; /&gt;</span><br><span class="line">            &lt;Text style=&#123;styles.text&#125;&gt;</span><br><span class="line">              &#123;rowData + &apos; - &apos; + LOREM_IPSUM.substr(0, rowHash % 301 + 10)&#125;</span><br><span class="line">            &lt;/Text&gt;</span><br><span class="line">          &lt;/View&gt;</span><br><span class="line">        &lt;/View&gt;</span><br><span class="line">      &lt;/TouchableHighlight&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>从上面的代码中可以看到，在TouchableHighlight的onPress中，制定了this._pressRow(rowID)为每个Item点击时的处理函数，其中rowID即为每个Item的ID，所以根据rowID为不同的Item指定不同的点击事件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">_pressRow: function(rowID: number) &#123;</span><br><span class="line">    this._pressData[rowID] = !this._pressData[rowID];</span><br><span class="line">    this.setState(&#123;dataSource: this.state.dataSource.cloneWithRows(</span><br><span class="line">      this._genRows(this._pressData)</span><br><span class="line">    )&#125;);</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码中，_pressData数组中保存了每个Item是否为按下状态，然后根据其状态决定每个Item按下时响应的事件。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">完整的代码在文章末尾</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置分割线"><a href="#设置分割线" class="headerlink" title="设置分割线"></a>设置分割线</h3><p>上面的代码最终出来的ListView是没有分割线的，而一般我们使用ListView都会设置一个分割线，一是比较美观，二是方便区分没一个Item。ListView有一个renderSeparator属性，其官方介绍如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">renderSeparator function </span><br><span class="line">(sectionID, rowID, adjacentRowHighlighted) =&gt; renderable</span><br><span class="line">If provided, a renderable component to be rendered as the separator below each row but not the last row if there is a section header below. Take a sectionID and rowID of the row above and whether its adjacent row is highlighted.</span><br></pre></td></tr></table></figure>
+
+<p>很明显这是用来给ListView设置分割线的。具体用法如下：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;ListView</span><br><span class="line">    dataSource=&#123;this.state.dataSource&#125;</span><br><span class="line">    renderRow=&#123;this._renderRow&#125;</span><br><span class="line">    renderSeparator=&#123;this._renderSeparator&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后实现_renderSeparator，返回分割线的视图：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">_renderSpeparator: function(sectionID:number, rowID:number, adjacentRowHighlighted:bool)&#123;</span><br><span class="line">	return (</span><br><span class="line">		&lt;View</span><br><span class="line">			style=&#123;</span><br><span class="line">				height: adjacentRowHighlighted ? 4 : 1,</span><br><span class="line">				backgroundColor: adjacentRowHighlighted ? &apos;#3B5998&apos; : &apos;#CCCCCC&apos;,</span><br><span class="line">			&#125;</span><br><span class="line">			key=&#123;`$&#123;sectionId&#125;-$&#123;rowID&#125;`&#125;</span><br><span class="line">	);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们就完成了给ListVIew设置分割线了。</p>
+<h3 id="更多用法"><a href="#更多用法" class="headerlink" title="更多用法"></a>更多用法</h3><p>ListView时Android中最强大的一个控件，其用法肯定不止上面那么简单，更多的功能和用法等待着我们在之后的使用过程中慢慢的发掘。</p>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p>完整的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">var React = require(&apos;react&apos;);</span><br><span class="line">var ReactNative = require(&apos;react-native&apos;);</span><br><span class="line">var &#123;</span><br><span class="line">  Image,</span><br><span class="line">  ListView,</span><br><span class="line">  TouchableHighlight,</span><br><span class="line">  StyleSheet,</span><br><span class="line">  RecyclerViewBackedScrollView,</span><br><span class="line">  Text,</span><br><span class="line">  View,</span><br><span class="line">&#125; = ReactNative;</span><br><span class="line"></span><br><span class="line">// var UIExplorerPage = require(&apos;./UIExplorerPage&apos;);</span><br><span class="line"></span><br><span class="line">var ListViewSimpleExample = React.createClass(&#123;</span><br><span class="line">  statics: &#123;</span><br><span class="line">    title: &apos;&lt;ListView&gt;&apos;,</span><br><span class="line">    description: &apos;Performant, scrollable list of data.&apos;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  getInitialState: function() &#123;</span><br><span class="line">    var ds = new ListView.DataSource(&#123;rowHasChanged: (r1, r2) =&gt; r1 !== r2&#125;);</span><br><span class="line">    return &#123;</span><br><span class="line">      dataSource: ds.cloneWithRows(this._genRows(&#123;&#125;)),</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  _pressData: (&#123;&#125;: &#123;[key: number]: boolean&#125;),</span><br><span class="line"></span><br><span class="line">  componentWillMount: function() &#123;</span><br><span class="line">    this._pressData = &#123;&#125;;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: function() &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;ListView</span><br><span class="line">          dataSource=&#123;this.state.dataSource&#125;</span><br><span class="line">          renderRow=&#123;this._renderRow&#125;</span><br><span class="line">          renderScrollComponent=&#123;props =&gt; &lt;RecyclerViewBackedScrollView &#123;...props&#125; /&gt;&#125;</span><br><span class="line">          renderSeparator=&#123;this._renderSeparator&#125;</span><br><span class="line"></span><br><span class="line">        /&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  _renderRow: function(rowData: string, sectionID: number, rowID: number, highlightRow: (sectionID: number, rowID: number) =&gt; void) &#123;</span><br><span class="line">    var rowHash = Math.abs(hashCode(rowData));</span><br><span class="line">    var imgSource = THUMB_URLS[rowHash % THUMB_URLS.length];</span><br><span class="line">    return (</span><br><span class="line">      &lt;TouchableHighlight onPress=&#123;() =&gt; &#123;</span><br><span class="line">          this._pressRow(rowID);</span><br><span class="line">          highlightRow(sectionID, rowID);</span><br><span class="line">        &#125;&#125;&gt;</span><br><span class="line">        &lt;View&gt;</span><br><span class="line">          &lt;View style=&#123;styles.row&#125;&gt;</span><br><span class="line">            &lt;Image style=&#123;styles.thumb&#125; source=&#123;imgSource&#125; /&gt;</span><br><span class="line">            &lt;Text style=&#123;styles.text&#125;&gt;</span><br><span class="line">              &#123;rowData + &apos; - &apos; + LOREM_IPSUM.substr(0, rowHash % 301 + 10)&#125;</span><br><span class="line">            &lt;/Text&gt;</span><br><span class="line">          &lt;/View&gt;</span><br><span class="line">        &lt;/View&gt;</span><br><span class="line">      &lt;/TouchableHighlight&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  _genRows: function(pressData: &#123;[key: number]: boolean&#125;): Array&lt;string&gt; &#123;</span><br><span class="line">    var dataBlob = [];</span><br><span class="line">    for (var ii = 0; ii &lt; 100; ii++) &#123;</span><br><span class="line">      var pressedText = pressData[ii] ? &apos; (pressed)&apos; : &apos;&apos;;</span><br><span class="line">      dataBlob.push(&apos;Row &apos; + ii + pressedText);</span><br><span class="line">    &#125;</span><br><span class="line">    return dataBlob;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  _pressRow: function(rowID: number) &#123;</span><br><span class="line">    this._pressData[rowID] = !this._pressData[rowID];</span><br><span class="line">    this.setState(&#123;dataSource: this.state.dataSource.cloneWithRows(</span><br><span class="line">      this._genRows(this._pressData)</span><br><span class="line">    )&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  _renderSeparator: function(sectionID: number, rowID: number, adjacentRowHighlighted: bool) &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;View</span><br><span class="line">        key=&#123;`$&#123;sectionID&#125;-$&#123;rowID&#125;`&#125;</span><br><span class="line">        style=&#123;</span><br><span class="line">          height: adjacentRowHighlighted ? 4 : 1,</span><br><span class="line">          backgroundColor: adjacentRowHighlighted ? &apos;#3B5998&apos; : &apos;#CCCCCC&apos;,</span><br><span class="line">        &#125;</span><br><span class="line">      /&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var THUMB_URLS = [</span><br><span class="line">  require(&apos;./Thumbnails/like.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/dislike.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/call.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/fist.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/bandaged.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/flowers.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/heart.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/liking.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/party.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/poke.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/superlike.png&apos;),</span><br><span class="line">  require(&apos;./Thumbnails/victory.png&apos;),</span><br><span class="line">  ];</span><br><span class="line">var LOREM_IPSUM = &apos;Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sapientem vulputate est, vel an accusam intellegam interesset. Nam eu stet pericula reprimique, ea vim illud modus, putant invidunt reprehendunt ne qui.&apos;;</span><br><span class="line"></span><br><span class="line">/* eslint no-bitwise: 0 */</span><br><span class="line">var hashCode = function(str) &#123;</span><br><span class="line">  var hash = 15;</span><br><span class="line">  for (var ii = str.length - 1; ii &gt;= 0; ii--) &#123;</span><br><span class="line">    hash = ((hash &lt;&lt; 5) - hash) + str.charCodeAt(ii);</span><br><span class="line">  &#125;</span><br><span class="line">  return hash;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">var styles = StyleSheet.create(&#123;</span><br><span class="line">  row: &#123;</span><br><span class="line">    flexDirection: &apos;row&apos;,</span><br><span class="line">    justifyContent: &apos;center&apos;,</span><br><span class="line">    padding: 10,</span><br><span class="line">    backgroundColor: &apos;#F6F6F6&apos;,</span><br><span class="line">  &#125;,</span><br><span class="line">  thumb: &#123;</span><br><span class="line">    width: 64,</span><br><span class="line">    height: 64,</span><br><span class="line">  &#125;,</span><br><span class="line">  text: &#123;</span><br><span class="line">    flex: 1,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">module.exports = ListViewSimpleExample;</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：</p>
+<p><img src="/img/4/final-effect.png" alt></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/08/26/react-native学习系列-组件学习1-ListView/">react-native学习系列--组件学习1(ListView)</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">yeshiyuan</a></p>
+        <p><span>发布时间:</span>2016-08-26, 10:20:34</p>
+        <p><span>最后更新:</span>2019-12-09, 20:12:47</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/08/26/react-native学习系列-组件学习1-ListView/" title="react-native学习系列--组件学习1(ListView)">https://yeshiyuan00.github.io/2016/08/26/react-native学习系列-组件学习1-ListView/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://yeshiyuan00.github.io/2016/08/26/react-native学习系列-组件学习1-ListView/　　作者: yeshiyuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/08/26/react-native学习系列-组件学习2-其它常用控件/">
+                    react-native学习系列--组件学习2(其它常用控件)
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/08/19/react-native学习系列-在已存在的项目中集成/">
+                    react-native学习系列--在已存在的项目中集成
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#最简单的用法"><span class="toc-number">1.</span> <span class="toc-text">最简单的用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#点击事件"><span class="toc-number">2.</span> <span class="toc-text">点击事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置分割线"><span class="toc-number">3.</span> <span class="toc-text">设置分割线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更多用法"><span class="toc-number">4.</span> <span class="toc-text">更多用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#完整代码"><span class="toc-number">5.</span> <span class="toc-text">完整代码</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"react-native学习系列--组件学习1(ListView)　| blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/08/26/react-native学习系列-组件学习2-其它常用控件/" title="上一篇: react-native学习系列--组件学习2(其它常用控件)">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/08/19/react-native学习系列-在已存在的项目中集成/" title="下一篇: react-native学习系列--在已存在的项目中集成">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/12/Android-App-bundle-调研/">Android App bundle 调研</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/FFmpeg学习系列-移植FFmpeg到Android平台/">FFmpeg学习系列-移植FFmpeg到Android平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/09/react-native学习系列-界面导航器-Navigator/">react-native学习系列-界面导航器(Navigator)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/02/react-native学习系列-使用数据库realm/">react-native学习系列-使用数据库realm</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/02/react-native学习系列-网络请求API/">react-native学习系列-网络请求API</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/react-native学习系列-弹性布局FlexBox/">react-native学习系列--弹性布局FlexBox</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/react-native学习系列-组件学习2-其它常用控件/">react-native学习系列--组件学习2(其它常用控件)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/react-native学习系列-组件学习1-ListView/">react-native学习系列--组件学习1(ListView)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/19/react-native学习系列-在已存在的项目中集成/">react-native学习系列--在已存在的项目中集成</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/19/react-native学习系列-环境搭建/">react-native学习系列--环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/04/jenkins自动构建Android项目/">jenkins自动构建Android项目</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 yeshiyuan
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
