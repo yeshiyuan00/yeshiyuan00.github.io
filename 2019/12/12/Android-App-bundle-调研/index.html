@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="Android App bundle 的使用调研">
+<meta name="description" content="Android App Bundle是Google最新推出的Apk动态打包，动态组件化的技术，与Instant App不同，AAB是借助Split Apk完成动态加载，使用AAB动态下发方式，可以大幅度减少应用体积。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android App bundle 调研">
 <meta property="og:url" content="https://yeshiyuan00.github.io/2019/12/12/Android-App-bundle-调研/index.html">
 <meta property="og:site_name" content="blog">
-<meta property="og:description" content="Android App bundle 的使用调研">
+<meta property="og:description" content="Android App Bundle是Google最新推出的Apk动态打包，动态组件化的技术，与Instant App不同，AAB是借助Split Apk完成动态加载，使用AAB动态下发方式，可以大幅度减少应用体积。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-12T08:49:52.380Z">
+<meta property="og:updated_time" content="2019-12-13T07:24:05.301Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android App bundle 调研">
-<meta name="twitter:description" content="Android App bundle 的使用调研">
+<meta name="twitter:description" content="Android App Bundle是Google最新推出的Apk动态打包，动态组件化的技术，与Instant App不同，AAB是借助Split Apk完成动态加载，使用AAB动态下发方式，可以大幅度减少应用体积。">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -297,8 +297,42 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>Android App bundle 的使用调研</p>
+        <p>Android App Bundle是Google最新推出的Apk动态打包，动态组件化的技术，与Instant App不同，AAB是借助Split Apk完成动态加载，使用AAB动态下发方式，可以大幅度减少应用体积。</p>
 <a id="more"></a>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>App bundle 将apk在资源纬度、ABI纬度和语言纬度进项拆分，然后客户端根据设备情况等信息按需组合安装所需要的apk即可。比如，项目中可能会xxhdpi,xhdpi各有一套图，或者x86,armeabi的又各有一套so库，以前的安装方式，是把这些全部装进用户的手机中，使用App Bundle，假设你是一个x86，xxhdpi的手机，那么App Bundle会帮你拼装好一个apk，这个apk的资源只有xxhdpi的，而且so库只有x86，其他无关的都会剔除。</p>
+<p>App Bundles将一个apk拆分成多个apk，我们的apk一般会被拆分为如下几个部分：</p>
+<p>Base Apk：首次安装的apk，公共代码和资源，所以其他的模块都基于Base Apk；<br>Configuration APKs：native libraries 和适配当前手机屏幕分辨率的资源的apk,根据设备的信息进行组合安装；<br>Dynamic feature APKs：特性功能模块，不需要在首次安装就加载。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>使用APP Bundle打包方式需要Android studio 3.2以上的版本。</p>
+<p>要使用特性功能模块动态加载功能，需要在项目中加入google play核心库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// In your app’s build.gradle file:</span><br><span class="line">...</span><br><span class="line">dependencies &#123;</span><br><span class="line">    // This dependency is downloaded from the Google’s Maven repository.</span><br><span class="line">    // So, make sure you also include that repository in your project&apos;s build.gradle file.</span><br><span class="line">    implementation &apos;com.google.android.play:core:1.6.4&apos;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体的使用play核心库下载模块方法参考<a href="https://developer.android.com/guide/app-bundle/playcore" target="_blank" rel="noopener">goole官方文档</a></p>
+<h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><h3 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h3><p>使用Android studio的菜单栏Build-&gt;Build Bundle(s)/Apk(s)-&gt;Build Bundle(s)打出来的即是.aab后缀的Android App Bundle包，我们将这个aab文件和签名文件上传到google play后台，google则会稍后为我们拆分打包出对应各个设备的签名apk包，客户最终下载的就是针对客户设备打包出来的最终apk包(不包含一些设配其他设备的资源等，所以客户下载的包体会相应减小)。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>可以在build.gradle的android节点下配置下面的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	bundle &#123;</span><br><span class="line">        	language &#123;</span><br><span class="line">	            enableSplit = true</span><br><span class="line">	        &#125;</span><br><span class="line">        	density &#123;</span><br><span class="line">           		enableSplit = true</span><br><span class="line">        	&#125;</span><br><span class="line">        	abi &#123;</span><br><span class="line">            	enableSplit = true</span><br><span class="line">        	&#125;</span><br><span class="line">    	&#125;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>enableSplit为true表示对应的纬度会进行拆分。</p>
+<h3 id="特性功能模块"><a href="#特性功能模块" class="headerlink" title="特性功能模块"></a>特性功能模块</h3><p>创建特性功能模块跟我们创建普通的module差不多，不过选择的是Dynamic Feature Module。有三个参数需要配置<br>1.module title这是动态下载安装时显示给用户的名字。<br>2.Install-time inclusion，配置是否按需下载。如果不启用，会直接打进Apk.<br>3.fusing, 对于不支持按需下载的设备(Android 5.0以下的系统)，是否直接融合安装。</p>
+<p>配置完之后，Android studio会为我们生成一些对应的配置，主app模块的build.gradle文件中会生成下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	dynamicFeatures = [&quot;:dynamicfeature&quot;]</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>动态加载模块的AndroidManifest文件则会生成如下配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:dist=&quot;http://schemas.android.com/apk/distribution&quot;</span><br><span class="line">    package=&quot;com.aube.dynamicfeature&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dist:module</span><br><span class="line">        dist:instant=&quot;false&quot;</span><br><span class="line">        dist:title=&quot;@string/title_dynamicfeature&quot;&gt;</span><br><span class="line">        &lt;dist:delivery&gt;</span><br><span class="line">            &lt;dist:on-demand /&gt;</span><br><span class="line">        &lt;/dist:delivery&gt;</span><br><span class="line">        &lt;dist:fusing dist:include=&quot;true&quot; /&gt;</span><br><span class="line">    &lt;/dist:module&gt;</span><br><span class="line">&lt;/manifest&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>测试打包出来的aab文件有两种方式。</p>
+<h3 id="上传到google-play控制后台，然后下载测试。"><a href="#上传到google-play控制后台，然后下载测试。" class="headerlink" title="上传到google play控制后台，然后下载测试。"></a>上传到google play控制后台，然后下载测试。</h3><p>暂时没条件测试，先使用方式二测试</p>
+<h3 id="使用bundletool工具进行本地测试"><a href="#使用bundletool工具进行本地测试" class="headerlink" title="使用bundletool工具进行本地测试"></a>使用bundletool工具进行本地测试</h3><p><a href="https://developer.android.com/studio/command-line/bundletool" target="_blank" rel="noopener">参考文档</a><br><a href="https://github.com/google/bundletool/releases" target="_blank" rel="noopener">工具下载地址</a></p>
+<p>从 app bundle 生成一组 APK<br>当 bundletool 从您的 app bundle 生成 APK 时，它会将这些 APK 包含在一个名为“APK set archive”的容器中，该容器以 .apks 作为文件扩展名。要从 app bundle 为应用支持的所有设备配置生成一组 APK，请使用 bundletool build-apks 命令，如下所示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundletool build-apks --bundle=/MyApp/my_app.aab --output=/MyApp/my_app.apks</span><br></pre></td></tr></table></figure>
+
+<p>也可以指定签名信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bundletool build-apks --bundle=/MyApp/my_app.aab --output=/MyApp/my_app.apks</span><br><span class="line">    --ks=/MyApp/keystore.jks</span><br><span class="line">    --ks-pass=file:/MyApp/keystore.pwd</span><br><span class="line">    --ks-key-alias=MyKeyAlias</span><br><span class="line">    --key-pass=file:/MyApp/key.pwd</span><br></pre></td></tr></table></figure>
+
+<p>将Apk部署到连接电脑的设备</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundletool install-apks --apks=/MyApp/my_app.apks</span><br></pre></td></tr></table></figure>
+
+<p>工具更多的的使用方法参考<a href="https://developer.android.com/studio/command-line/bundletool" target="_blank" rel="noopener">官方文档</a></p>
+
       
     </div>
     
@@ -309,7 +343,7 @@
         <p><span>本文标题:</span><a href="/2019/12/12/Android-App-bundle-调研/">Android App bundle 调研</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">yeshiyuan</a></p>
         <p><span>发布时间:</span>2019-12-12, 16:47:28</p>
-        <p><span>最后更新:</span>2019-12-12, 16:49:52</p>
+        <p><span>最后更新:</span>2019-12-13, 15:24:05</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/12/12/Android-App-bundle-调研/" title="Android App bundle 调研">https://yeshiyuan00.github.io/2019/12/12/Android-App-bundle-调研/</a>
             <span class="copy-path" data-clipboard-text="原文: https://yeshiyuan00.github.io/2019/12/12/Android-App-bundle-调研/　　作者: yeshiyuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -339,7 +373,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备"><span class="toc-number">2.</span> <span class="toc-text">准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始使用"><span class="toc-number">3.</span> <span class="toc-text">开始使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#打包"><span class="toc-number">3.1.</span> <span class="toc-text">打包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特性功能模块"><span class="toc-number">3.3.</span> <span class="toc-text">特性功能模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">4.</span> <span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#上传到google-play控制后台，然后下载测试。"><span class="toc-number">4.1.</span> <span class="toc-text">上传到google play控制后台，然后下载测试。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用bundletool工具进行本地测试"><span class="toc-number">4.2.</span> <span class="toc-text">使用bundletool工具进行本地测试</span></a></li></ol></li></ol>
         
     </div>
     <style>
